@@ -1,0 +1,5 @@
+model/saved_model/*
+model/.ipynb_checkpoints
+model/*.npy
+model/bisindo - video dataset/
+model/videoflow_generator_1
