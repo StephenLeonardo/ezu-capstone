@@ -6,6 +6,13 @@ from data_tools import audio_files_to_numpy, numpy_audio_to_matrix_spectrogram, 
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+import tensorflow as tf
+from tensorflow.keras.models import model_from_json
+
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+if len(physical_devices) > 0:
+   tf.config.experimental.set_memory_growth(physical_devices[0], True)
 # Create your views here.
 
 
@@ -40,7 +47,7 @@ def getTranslation(request):
     filename = request.query_params.get('filename', None)
 
     # Url untuk cloud storage
-    dirname = '/asd/'
+    dirname = '/asd/' + filename
 
     audio = audio_files_to_numpy(dirname, filename, sample_rate,
                              frame_length, hop_length_frame, min_duration)
@@ -72,8 +79,15 @@ def getTranslation(request):
 
 
     output_file = (audio_denoise_recons.flatten() * 100)
-
+    export_filename = 'output1'
     # url untuk export audio yg udah dijernihin ke cloud storage
-    export_path = ''
+    export_path = '' + export_filename
+    sf.write(export_path, audio, sample_rate)
 
-    export_audio_file(export_path, output_file, sample_rate)
+    callGoogleAPI()
+
+
+    # export_audio_file(export_path, output_file, sample_rate)
+
+def callGoogleAPI():
+    pass
