@@ -14,6 +14,9 @@ from tensorflow.keras.models import model_from_json
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
+from capstone.settings import WEIGHTS_FOLDER
+
 # Create your views here.
 
 
@@ -33,7 +36,7 @@ def callGoogleAPI():
 
 
 def loadModel():
-    path_weights = 'C:/Users/Steph/#Binus/#Bangkit/#Project/ezu-capstone/api/api/weights/'
+    path_weights = WEIGHTS_FOLDER
     # load json and create model
     json_file = open(path_weights+'model_unet.json', 'r')
     loaded_model_json = json_file.read()
