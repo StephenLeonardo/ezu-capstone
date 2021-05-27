@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from .serializers import AudioSerializer
+# from .serializers import AudioSerializer
 from django.http import JsonResponse
-from data_tools import scaled_in, inv_scaled_ou
-from data_tools import audio_files_to_numpy, numpy_audio_to_matrix_spectrogram, matrix_spectrogram_to_numpy_audio, export_audio_file
+from .data_tools import scaled_in, inv_scaled_ou
+from .data_tools import audio_files_to_numpy, numpy_audio_to_matrix_spectrogram, matrix_spectrogram_to_numpy_audio, export_audio_file
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import soundfile as sf
 import tensorflow as tf
 from tensorflow.keras.models import model_from_json
 
@@ -27,9 +28,12 @@ hop_length_frame = 8064
 # hop length for noise files (we split noise into several windows)
 hop_length_frame_noise = 5000
 
+def callGoogleAPI():
+    pass
+
 
 def loadModel():
-    path_weights = './weights/'
+    path_weights = 'C:/Users/Steph/#Binus/#Bangkit/#Project/ezu-capstone/api/api/weights/'
     # load json and create model
     json_file = open(path_weights+'model_unet.json', 'r')
     loaded_model_json = json_file.read()
@@ -40,16 +44,16 @@ def loadModel():
 
     return loaded_model
 
-loaded_model = load_model()
+loaded_model = loadModel()
 
 @api_view(['GET'])
 def getTranslation(request):
     filename = request.query_params.get('filename', None)
 
     # Url untuk cloud storage
-    dirname = '/asd/' + filename
+    dirname = 'C:/Users/Steph/#Binus/#Bangkit/#Project/ezu-capstone/model/'
 
-    audio = audio_files_to_numpy(dirname, filename, sample_rate,
+    audio = audio_files_to_numpy(dirname, [filename], sample_rate,
                              frame_length, hop_length_frame, min_duration)
 
     n_fft = 255
@@ -79,15 +83,13 @@ def getTranslation(request):
 
 
     output_file = (audio_denoise_recons.flatten() * 100)
-    export_filename = 'output1'
+    export_filename = 'test.wav'
     # url untuk export audio yg udah dijernihin ke cloud storage
-    export_path = '' + export_filename
-    sf.write(export_path, audio, sample_rate)
+    export_path = 'C:/Users/Steph/#Binus/#Bangkit/#Project/ezu-capstone/api/api/' + export_filename
+    sf.write(export_path, output_file, sample_rate)
 
     callGoogleAPI()
 
+    return Response({'status': 'Success!'})
 
     # export_audio_file(export_path, output_file, sample_rate)
-
-def callGoogleAPI():
-    pass
