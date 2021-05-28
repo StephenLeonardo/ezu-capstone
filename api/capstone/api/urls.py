@@ -5,5 +5,5 @@ from .views import getTranslation
 app_name = 'api'
 
 urlpatterns = [
-    path('get-translation/', getTranslation.as_view(), name='getTranslation')
+    path('get-translation/', getTranslation, name='getTranslation')
 ]
