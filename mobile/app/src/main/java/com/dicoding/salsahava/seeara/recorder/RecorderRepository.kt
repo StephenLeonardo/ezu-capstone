@@ -5,10 +5,8 @@ import android.content.ContextWrapper
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Environment
-import android.util.Log
 import java.io.File
 import java.io.IOException
-import java.lang.IllegalStateException
 
 class RecorderRepository private constructor(context: Context) {
 
@@ -28,7 +26,6 @@ class RecorderRepository private constructor(context: Context) {
             mediaRecorder?.prepare()
             mediaRecorder?.start()
 
-            Log.d("Repo", "Started!")
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         } catch (e: IOException) {
@@ -38,9 +35,8 @@ class RecorderRepository private constructor(context: Context) {
 
     fun stopRecording() {
         mediaRecorder?.stop()
+        mediaRecorder?.reset()
         mediaRecorder?.release()
-
-        Log.d("Repo", "Stopped!")
 
         initRecorder()
     }
@@ -51,8 +47,6 @@ class RecorderRepository private constructor(context: Context) {
             mediaPlayer.setDataSource(getRecordingPath())
             mediaPlayer.prepare()
             mediaPlayer.start()
-
-            Log.d("Repo", "Played!")
 
         } catch (e: Exception) {
             e.printStackTrace()
