@@ -9,7 +9,7 @@ import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.history.HistoryFragment
 import com.dicoding.salsahava.seeara.recorder.RecorderFragment
 
-class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm){
+class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     companion object {
         @StringRes
