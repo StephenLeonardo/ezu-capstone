@@ -11,4 +11,6 @@ class RecorderViewModel(private val recorderRepository: RecorderRepository) : Vi
 
     fun playRecording() = recorderRepository.playRecording()
 
+    fun uploadAudio() = recorderRepository.uploadAudio()
+
 }

@@ -75,6 +75,7 @@ class RecorderFragment : Fragment() {
 
     private fun stopRecording() {
         viewModel?.stopRecording()
+        viewModel?.uploadAudio()
 
         binding?.fabStart?.visibility = View.VISIBLE
         binding?.fabStop?.visibility = View.INVISIBLE
