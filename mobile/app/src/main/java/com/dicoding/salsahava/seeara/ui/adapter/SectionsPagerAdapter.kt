@@ -7,9 +7,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.ui.history.HistoryFragment
-import com.dicoding.salsahava.seeara.recorder.RecorderFragment
+import com.dicoding.salsahava.seeara.ui.recorder.RecorderFragment
 
-class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
+class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         @StringRes

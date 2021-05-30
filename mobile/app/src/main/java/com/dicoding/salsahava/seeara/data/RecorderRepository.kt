@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.recorder
+package com.dicoding.salsahava.seeara.data
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -8,7 +8,7 @@ import android.os.Environment
 import java.io.File
 import java.io.IOException
 
-class RecorderRepository private constructor(context: Context) {
+class RecorderRepository(context: Context) {
 
     private var mediaRecorder: MediaRecorder? = null
     private val directory = ContextWrapper(context).getExternalFilesDir(Environment.DIRECTORY_MUSIC)

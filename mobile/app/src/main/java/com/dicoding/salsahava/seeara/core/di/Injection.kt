@@ -1,7 +1,7 @@
-package com.dicoding.salsahava.seeara.di
+package com.dicoding.salsahava.seeara.core.di
 
 import android.content.Context
-import com.dicoding.salsahava.seeara.recorder.RecorderRepository
+import com.dicoding.salsahava.seeara.data.RecorderRepository
 
 object Injection {
 

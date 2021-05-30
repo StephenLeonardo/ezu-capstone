@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.recorder
+package com.dicoding.salsahava.seeara.ui.recorder
 
 import android.content.Context
 import android.content.pm.PackageManager

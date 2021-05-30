@@ -9,7 +9,8 @@ import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 import com.dicoding.salsahava.seeara.entity.History
 
-class HistoryAdapter(private val activity: Activity) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>(){
+class HistoryAdapter(private val activity: Activity) :
+    RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     var listHistory = ArrayList<History>()
         set(listHistory) {
@@ -22,7 +23,8 @@ class HistoryAdapter(private val activity: Activity) : RecyclerView.Adapter<Hist
         parent: ViewGroup,
         viewType: Int
     ): HistoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list_history, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_list_history, parent, false)
         return HistoryViewHolder(view)
     }
 

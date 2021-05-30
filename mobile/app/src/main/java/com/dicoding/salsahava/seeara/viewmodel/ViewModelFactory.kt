@@ -3,9 +3,10 @@ package com.dicoding.salsahava.seeara.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.salsahava.seeara.di.Injection
-import com.dicoding.salsahava.seeara.recorder.RecorderRepository
-import com.dicoding.salsahava.seeara.recorder.RecorderViewModel
+import com.dicoding.salsahava.seeara.core.di.Injection
+import com.dicoding.salsahava.seeara.data.RecorderRepository
+import com.dicoding.salsahava.seeara.ui.recorder.RecorderViewModel
+import com.dicoding.salsahava.seeara.ui.history.HistoryViewModel
 
 class ViewModelFactory private constructor(private val recorderRepository: RecorderRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -16,7 +17,10 @@ class ViewModelFactory private constructor(private val recorderRepository: Recor
             modelClass.isAssignableFrom(RecorderViewModel::class.java) -> {
                 return RecorderViewModel(recorderRepository) as T
             }
-            else -> throw Throwable("Unknown ViewModel class: ${modelClass.name}")
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                return HistoryViewModel() as T
+            }
+            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
     }
 
