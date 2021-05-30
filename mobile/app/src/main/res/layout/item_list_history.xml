@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:cardMaxElevation="4dp">
+
+            <TextView
+                android:id="@+id/tv_history_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="14sp"
+                android:text="@string/desc" />
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
