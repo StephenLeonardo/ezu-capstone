@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.adapter
+package com.dicoding.salsahava.seeara.ui.adapter
 
 import android.app.Activity
 import android.view.LayoutInflater

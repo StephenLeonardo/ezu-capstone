@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.history
+package com.dicoding.salsahava.seeara.ui.history
 
 import androidx.lifecycle.ViewModel
 

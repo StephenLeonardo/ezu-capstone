@@ -1,8 +1,8 @@
-package com.dicoding.salsahava.seeara.home
+package com.dicoding.salsahava.seeara.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.salsahava.seeara.adapter.SectionsPagerAdapter
+import com.dicoding.salsahava.seeara.ui.adapter.SectionsPagerAdapter
 import com.dicoding.salsahava.seeara.databinding.ActivityMainBinding
 
 class HomeActivity : AppCompatActivity() {
