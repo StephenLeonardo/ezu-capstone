@@ -3,7 +3,7 @@ package com.dicoding.salsahava.seeara.ui.recorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.salsahava.seeara.data.RecorderRepository
+import com.dicoding.salsahava.seeara.data.source.RecorderRepository
 
 class RecorderViewModel(private val recorderRepository: RecorderRepository) : ViewModel() {
 
