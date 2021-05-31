@@ -7,6 +7,12 @@ app = Flask(__name__)
 def hello():
     return 'Hello World!'
 
+
+
+from google.cloud import speech
+client = speech.SpeechClient()
+
+
 import json
 import io
 import os
@@ -39,7 +45,31 @@ loaded_model = tf.keras.models.load_model('my_model3')
 
 
 def callGoogleAPI():
-    pass
+    gcs_uri = "gs://cloud-samples-data/speech/brooklyn_bridge.raw"
+    cwd = os.getcwd()
+    filepath = os.path.join(cwd, 'exported', 'test.wav')
+
+    with io.open(filepath, "rb") as audio_file:
+        content = audio_file.read()
+
+    audio = speech.RecognitionAudio(content=content)
+
+
+    config = speech.RecognitionConfig(
+        sample_rate_hertz=8000,
+        language_code="id-ID",
+    )
+
+    response = client.recognize(config=config, audio=audio)
+
+    transcript = ''
+
+    for result in response.results:
+        transcript += str(result.alternatives[0].transcript) = ' '
+        # The first alternative is the most likely one for this portion.
+        # print(u"Transcript: {}".format(result.alternatives[0].transcript))
+
+    return transcript
 
 
 @app.route('/predict', methods=['GET'])
@@ -115,7 +145,11 @@ def predict():
 
     translation = 'selamat pagi'
 
-    callGoogleAPI()
+    transcript = callGoogleAPI()
+
+    if transcript is not None and transcript != '':
+        translation = transcript
+
     #
     response_json = {
         "filename" : request.args.get('filename', None),
