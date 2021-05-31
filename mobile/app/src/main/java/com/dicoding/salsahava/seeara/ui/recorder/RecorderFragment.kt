@@ -3,6 +3,7 @@ package com.dicoding.salsahava.seeara.ui.recorder
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,7 +76,11 @@ class RecorderFragment : Fragment() {
 
     private fun stopRecording() {
         viewModel?.stopRecording()
-        viewModel?.uploadAudio()
+        viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
+            binding?.tvDownloadUrl?.text = downloadUrl?.toString()
+        })
+
+        Log.d("Fragment", "Download url obtained")
 
         binding?.fabStart?.visibility = View.VISIBLE
         binding?.fabStop?.visibility = View.INVISIBLE
