@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
-import com.dicoding.salsahava.seeara.entity.History
+import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 
 class HistoryAdapter(private val activity: Activity) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
-    var listHistory = ArrayList<History>()
+    var listHistory = ArrayList<RecordingEntity>()
         set(listHistory) {
             this.listHistory.clear()
             this.listHistory.addAll(listHistory)
@@ -37,7 +37,7 @@ class HistoryAdapter(private val activity: Activity) :
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemListHistoryBinding.bind(itemView)
 
-        fun bind(history: History) {
+        fun bind(history: RecordingEntity) {
             binding.tvHistoryDesc.text = history.description
         }
     }

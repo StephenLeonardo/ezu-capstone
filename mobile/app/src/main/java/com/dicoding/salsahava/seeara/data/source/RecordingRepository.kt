@@ -5,10 +5,11 @@ import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
 import java.io.IOException
 
-class RecorderRepository private constructor(
+class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val path: String
 ) {
@@ -78,11 +79,11 @@ class RecorderRepository private constructor(
 
     companion object {
         @Volatile
-        private var instance: RecorderRepository? = null
+        private var instance: RecordingRepository? = null
 
-        fun getInstance(remoteDataSource: RemoteDataSource, path: String): RecorderRepository =
+        fun getInstance(remoteDataSource: RemoteDataSource, path: String): RecordingRepository =
             instance ?: synchronized(this) {
-                instance ?: RecorderRepository(remoteDataSource, path).apply {
+                instance ?: RecordingRepository(remoteDataSource, path).apply {
                     instance = this
                 }
             }
