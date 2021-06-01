@@ -223,7 +223,7 @@ def predict():
             "filename" : request.form.get('filename', None),
             "file_url" : request.form.get("file_url", None),
             "message" : str(ex),
-            "translation" : str(translation)
+            "translation" : ""
         }
         return json.dumps(response_json)
 
