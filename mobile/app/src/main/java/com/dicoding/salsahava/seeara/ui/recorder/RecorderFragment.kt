@@ -82,7 +82,7 @@ class RecorderFragment : Fragment() {
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    binding?.tvDownloadUrl?.text = recording.translation
+                    binding?.cvTranslation?.tvTranslation?.text = recording.translation
                     adapter.addItem(recording)
                 })
         })

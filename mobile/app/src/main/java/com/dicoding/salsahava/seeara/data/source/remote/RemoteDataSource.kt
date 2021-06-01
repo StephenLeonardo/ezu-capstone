@@ -43,11 +43,14 @@ class RemoteDataSource {
                 if (response.isSuccessful) {
                     val recording = response.body() as RecordingResponse
 
-                    if (recording.message != "Success") Toast.makeText(
-                        context,
-                        "Maaf, kami tidak dapat mendengar suaranya. Apakah dapat diulang?",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    if (recording.message != "Success") {
+                        Toast.makeText(
+                            context,
+                            "Maaf, kami tidak dapat mendengar suaranya. Apakah dapat diulang?",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d(TAG, recording.message)
+                    }
                     else callback.onRecordingReceived(recording)
                 }
             }
