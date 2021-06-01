@@ -214,7 +214,7 @@ def predict():
         f = open("logfile.txt", "a")
 
         # writing in the file
-        f.write(str(ex))
+        f.write(str(ex)+ '\n')
 
         # closing the file
         f.close()
