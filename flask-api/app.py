@@ -147,7 +147,7 @@ def predict():
 
         print("yep")
 
-        filepath_to_save = './assets/' + filename
+        filepath_to_save = './assets/' + 'input.mp3'
         pathlib.Path((filepath_to_save)).write_bytes(z.getbuffer())
 
         print("yess")
