@@ -209,6 +209,16 @@ def predict():
 
         return json.dumps(response_json)
     except Exception as ex:
+
+        # creating/opening a file
+        f = open("logfile.txt", "a")
+
+        # writing in the file
+        f.write(str(ex))
+
+        # closing the file
+        f.close()
+
         response_json = {
             "filename" : request.form.get('filename', None),
             "file_url" : request.form.get("file_url", None),
