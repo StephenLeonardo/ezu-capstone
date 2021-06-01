@@ -14,7 +14,8 @@ import java.io.IOException
 
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val path: String
+    private val path: String,
+    private val localDataSource: LocalDataSource
 ) : RecordingDataSource {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -87,6 +88,7 @@ class RecordingRepository private constructor(
             object : RemoteDataSource.LoadRecordingCallback {
                 override fun onRecordingReceived(recordingResponse: RecordingResponse) {
                     val recording = RecordingEntity(
+                        0,
                         recordingResponse.fileName,
                         recordingResponse.fileUrl,
                         recordingResponse.translation,
@@ -100,13 +102,32 @@ class RecordingRepository private constructor(
         return recordingResult
     }
 
+    override fun getAllRecord(): LiveData<List<RecordingEntity>> =
+        localDataSource.getAllRecord()
+
+    override fun insertRecord(record: RecordingEntity) {
+        localDataSource.insertRecord(record)
+    }
+
+    override fun updateRecord(record: RecordingEntity) {
+        localDataSource.updateRecord(record)
+    }
+
+    override fun deleteRecord(record: RecordingEntity) {
+        localDataSource.deleteRecord(record)
+    }
+
     companion object {
         @Volatile
         private var instance: RecordingRepository? = null
 
-        fun getInstance(remoteDataSource: RemoteDataSource, path: String): RecordingRepository =
+        fun getInstance(
+            remoteDataSource: RemoteDataSource,
+            path: String,
+            localDataSource: LocalDataSource
+        ): RecordingRepository =
             instance ?: synchronized(this) {
-                instance ?: RecordingRepository(remoteDataSource, path).apply {
+                instance ?: RecordingRepository(remoteDataSource, path, localDataSource).apply {
                     instance = this
                 }
             }
