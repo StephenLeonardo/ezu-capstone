@@ -14,5 +14,8 @@ data class RecordingResponse(
 	val fileName: String,
 
 	@field:SerializedName("translation")
-	val translation: String
+	val translation: String,
+
+	@field:SerializedName("message")
+	val message: String
 ) : Parcelable
