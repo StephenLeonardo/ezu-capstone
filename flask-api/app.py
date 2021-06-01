@@ -119,94 +119,103 @@ def testSpeech():
 
 
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    try:
+        # request_json = request.json
+        # print("data: {}".format(request_json))
+        # print("type: {}".format(type(request_json)))
+        # user = request.args.get('user')
+        # sudah termasuk link public untuk filenya
+        filename = request.form.get('filename', None)
+        file_url =  request.form.get('file_url', None)
 
-    # request_json = request.json
-    # print("data: {}".format(request_json))
-    # print("type: {}".format(type(request_json)))
-    # user = request.args.get('user')
-    # sudah termasuk link public untuk filenya
-    filename = request.args.get('filename', None)
-    file_url =  request.args.get('file_url', None)
+        print(filename)
+        print(file_url)
 
-    print(filename)
-    print(file_url)
+        print('woohoo')
+        # Url untuk cloud storage
+        # dirname = 'https://storage.googleapis.com/ezu-storage/'
+        #
+        #
+        # full_name = dirname + filename
 
-    print('woohoo')
-    # Url untuk cloud storage
-    # dirname = 'https://storage.googleapis.com/ezu-storage/'
-    #
-    #
-    # full_name = dirname + filename
-
-    #
-    print("oke")
-    z = io.BytesIO(urlopen(file_url).read())
-
-
-    print("yep")
-
-    filepath_to_save = './assets/' + filename
-    pathlib.Path((filepath_to_save)).write_bytes(z.getbuffer())
-
-    print("yess")
-
-    # X, sample_rate = librosa.load(filepath)
+        #
+        print("oke")
+        z = io.BytesIO(urlopen(file_url).read())
 
 
-    audio = audio_files_to_numpy(filepath_to_save, sample_rate,
-                             frame_length, hop_length_frame, min_duration)
+        print("yep")
 
-    n_fft = 255
-    hop_length_fft = 63
-    dim_square_spec = int(n_fft / 2) + 1
+        filepath_to_save = './assets/' + filename
+        pathlib.Path((filepath_to_save)).write_bytes(z.getbuffer())
 
-    m_amp_db_audio,  m_pha_audio = numpy_audio_to_matrix_spectrogram(
-    audio, dim_square_spec, n_fft, hop_length_fft)
+        print("yess")
 
+        # X, sample_rate = librosa.load(filepath)
 
 
+        audio = audio_files_to_numpy(filepath_to_save, sample_rate,
+                                 frame_length, hop_length_frame, min_duration)
 
-    #global scaling to have distribution -1/1
-    X_in = scaled_in(m_amp_db_audio)
-    #Reshape for prediction
-    X_in = X_in.reshape(X_in.shape[0],X_in.shape[1],X_in.shape[2],1)
-    #Prediction using loaded network
-    X_pred = loaded_model.predict(X_in)
-    #Rescale back the noise model
-    inv_sca_X_pred = inv_scaled_ou(X_pred)
-    #Remove noise model from noisy speech
-    X_denoise = m_amp_db_audio - inv_sca_X_pred[:,:,:,0]
-    #Reconstruct audio from denoised spectrogram and phase
-    audio_denoise_recons = matrix_spectrogram_to_numpy_audio(X_denoise, m_pha_audio, frame_length, hop_length_fft)
+        n_fft = 255
+        hop_length_fft = 63
+        dim_square_spec = int(n_fft / 2) + 1
+
+        m_amp_db_audio,  m_pha_audio = numpy_audio_to_matrix_spectrogram(
+        audio, dim_square_spec, n_fft, hop_length_fft)
 
 
 
 
-    output_file = (audio_denoise_recons.flatten() * 100)
-    export_filename = 'test.wav'
-    # url untuk export audio yg udah dijernihin ke cloud storage
-    export_path = './exported/' + export_filename
-    sf.write(export_path, output_file, sample_rate)
-
-    translation = 'selamat pagi'
-
-    transcript = callGoogleAPI()
-
-    if transcript is not None and transcript != '':
-        translation = transcript
-
-    #
-    response_json = {
-        "filename" : request.args.get('filename', None),
-        "file_url" : request.args.get("file_url", None),
-        "translation" : str(translation)
-    }
+        #global scaling to have distribution -1/1
+        X_in = scaled_in(m_amp_db_audio)
+        #Reshape for prediction
+        X_in = X_in.reshape(X_in.shape[0],X_in.shape[1],X_in.shape[2],1)
+        #Prediction using loaded network
+        X_pred = loaded_model.predict(X_in)
+        #Rescale back the noise model
+        inv_sca_X_pred = inv_scaled_ou(X_pred)
+        #Remove noise model from noisy speech
+        X_denoise = m_amp_db_audio - inv_sca_X_pred[:,:,:,0]
+        #Reconstruct audio from denoised spectrogram and phase
+        audio_denoise_recons = matrix_spectrogram_to_numpy_audio(X_denoise, m_pha_audio, frame_length, hop_length_fft)
 
 
 
-    return json.dumps(response_json)
+
+        output_file = (audio_denoise_recons.flatten() * 100)
+        export_filename = 'test.wav'
+        # url untuk export audio yg udah dijernihin ke cloud storage
+        export_path = './exported/' + export_filename
+        sf.write(export_path, output_file, sample_rate)
+
+        translation = 'selamat pagi'
+
+        transcript = callGoogleAPI()
+
+        if transcript is not None and transcript != '':
+            translation = transcript
+
+        #
+        response_json = {
+            "filename" : request.form.get('filename', None),
+            "file_url" : request.form.get("file_url", None),
+            "message" : "Success",
+            "translation" : str(translation)
+        }
+
+
+
+        return json.dumps(response_json)
+    except Exception as ex:
+        response_json = {
+            "filename" : request.form.get('filename', None),
+            "file_url" : request.form.get("file_url", None),
+            "message" : str(ex),
+            "translation" : str(translation)
+        }
+        return json.dumps(response_json)
 
 
 if __name__ == '__main__':
