@@ -3,7 +3,6 @@ package com.dicoding.salsahava.seeara.ui.recorder
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.salsahava.seeara.databinding.FragmentRecorderBinding
+import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
 
 class RecorderFragment : Fragment() {
@@ -21,6 +21,7 @@ class RecorderFragment : Fragment() {
     private val binding get() = _fragmentRecordBinding
 
     private var viewModel: RecorderViewModel? = null
+    private lateinit var adapter: HistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +40,8 @@ class RecorderFragment : Fragment() {
 
             binding?.fabStart?.isEnabled = true
             binding?.fabPlay?.isEnabled = false
+
+            adapter = HistoryAdapter(requireActivity())
 
             binding?.fabStart?.setOnClickListener {
                 val permissions = arrayOf(
@@ -77,10 +80,12 @@ class RecorderFragment : Fragment() {
     private fun stopRecording() {
         viewModel?.stopRecording()
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
-            binding?.tvDownloadUrl?.text = downloadUrl?.toString()
+            viewModel?.getRecording(requireContext(), downloadUrl.toString())
+                ?.observe(viewLifecycleOwner, { recording ->
+                    binding?.tvDownloadUrl?.text = recording.translation
+                    adapter.addItem(recording)
+                })
         })
-
-        Log.d("Fragment", "Download url obtained")
 
         binding?.fabStart?.visibility = View.VISIBLE
         binding?.fabStop?.visibility = View.INVISIBLE

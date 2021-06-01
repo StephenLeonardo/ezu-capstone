@@ -10,10 +10,6 @@ import com.dicoding.salsahava.seeara.R
 
 class HistoryFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HistoryFragment()
-    }
-
     private lateinit var viewModel: HistoryViewModel
 
     override fun onCreateView(
@@ -23,10 +19,11 @@ class HistoryFragment : Fragment() {
         return inflater.inflate(R.layout.history_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
+    companion object {
+        fun newInstance() = HistoryFragment()
+    }
 }

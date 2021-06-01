@@ -1,17 +1,20 @@
 package com.dicoding.salsahava.seeara.ui.recorder
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.salsahava.seeara.data.RecorderRepository
+import com.dicoding.salsahava.seeara.data.source.RecordingRepository
 
-class RecorderViewModel(private val recorderRepository: RecorderRepository) : ViewModel() {
+class RecorderViewModel(private val recordingRepository: RecordingRepository) : ViewModel() {
 
-    fun startRecording() = recorderRepository.startRecording()
+    fun startRecording() = recordingRepository.startRecording()
 
-    fun stopRecording() = recorderRepository.stopRecording()
+    fun stopRecording() = recordingRepository.stopRecording()
 
-    fun playRecording() = recorderRepository.playRecording()
+    fun playRecording() = recordingRepository.playRecording()
 
-    fun getDownloadUrl(): LiveData<Uri> = recorderRepository.getDownloadUrl()
+    fun getDownloadUrl(): LiveData<Uri> = recordingRepository.getDownloadUrl()
+
+    fun getRecording(context: Context, downloadUrl: String) = recordingRepository.getRecording(context, downloadUrl)
 }
