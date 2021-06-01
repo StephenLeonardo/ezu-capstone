@@ -10,7 +10,8 @@ object Injection {
 
     fun provideRepository(context: Context): RecordingRepository {
         val remoteDataSource = RemoteDataSource.getInstance()
-        val path = ContextWrapper(context).getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath + "/recording.mp3"
+        val path =
+            ContextWrapper(context).getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath + "/recording.mp3"
 
         return RecordingRepository.getInstance(remoteDataSource, path)
     }

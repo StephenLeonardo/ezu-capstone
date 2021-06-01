@@ -1,63 +1,68 @@
 package com.dicoding.salsahava.seeara.data.source.remote
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import android.widget.Toast
 import com.dicoding.salsahava.seeara.api.ApiConfig
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
-import com.dicoding.salsahava.seeara.utils.Formatter
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.util.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class RemoteDataSource {
 
     private val storage = Firebase.storage
-    private val broadcastChannel = BroadcastChannel<String>(Channel.CONFLATED)
+    private val fileName = "${UUID.randomUUID()}.mp3"
 
     fun getDownloadUrl(path: String, callback: LoadDownloadUrlCallback) {
         val storageRef = storage.reference
-        val audioRef = storageRef.child("audios").child("${UUID.randomUUID()}.mp3")
+        val audioRef = storageRef.child("audios").child(fileName)
 
         val uri = Uri.fromFile(File(path))
 
-        val metadata = StorageMetadata.Builder()
-            .setCustomMetadata("date", Formatter.getCurrentDate())
-            .build()
-
-        audioRef.putFile(uri, metadata).addOnSuccessListener {
-            Log.d("Repo", "File uploaded")
+        audioRef.putFile(uri).addOnSuccessListener {
+            Log.d(TAG, "File uploaded")
             audioRef.downloadUrl.addOnSuccessListener {
                 callback.onDownloadUrlReceived(it)
             }
         }
     }
 
-    fun getRecording(fileName: String, downloadUrl: Uri): LiveData<RecordingResponse> {
-        return broadcastChannel.asFlow()
-            .debounce(300)
-            .distinctUntilChanged()
-            .filter {
-                it.trim().isNotEmpty()
+    fun getRecording(context: Context, downloadUrl: String, callback: LoadRecordingCallback) {
+        val client = ApiConfig.provideApiService().getRecording(fileName, downloadUrl)
+        client.enqueue(object : Callback<RecordingResponse> {
+            override fun onResponse(
+                call: Call<RecordingResponse>,
+                response: Response<RecordingResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val recording = response.body() as RecordingResponse
+                    callback.onRecordingReceived(recording)
+                }
             }
-            .mapLatest {
-                ApiConfig.provideApiService().getRecording(fileName, downloadUrl)
+
+            override fun onFailure(call: Call<RecordingResponse>, t: Throwable) {
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                Toast.makeText(
+                    context,
+                    "Maaf, kami tidak dapat mendengar suaranya. Apakah dapat diulang?",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            .asLiveData()
+        })
     }
 
     interface LoadDownloadUrlCallback {
-        fun onDownloadUrlReceived(downloadUrl: Uri)
+        fun onDownloadUrlReceived(downloadUrlResponse: Uri)
+    }
+
+    interface LoadRecordingCallback {
+        fun onRecordingReceived(recordingResponse: RecordingResponse)
     }
 
     companion object {
@@ -68,5 +73,7 @@ class RemoteDataSource {
             instance ?: synchronized(this) {
                 instance ?: RemoteDataSource().apply { instance = this }
             }
+
+        private const val TAG = "RemoteDataSource"
     }
 }

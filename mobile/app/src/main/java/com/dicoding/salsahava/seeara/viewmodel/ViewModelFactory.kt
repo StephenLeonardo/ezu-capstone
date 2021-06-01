@@ -18,7 +18,7 @@ class ViewModelFactory private constructor(private val recordingRepository: Reco
                 return RecorderViewModel(recordingRepository) as T
             }
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
-                return HistoryViewModel() as T
+                return HistoryViewModel(recordingRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

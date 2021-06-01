@@ -1,5 +1,6 @@
 package com.dicoding.salsahava.seeara.data.source
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -7,12 +8,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
+import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
+import com.dicoding.salsahava.seeara.utils.Formatter
 import java.io.IOException
 
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val path: String
-) {
+) : RecordingDataSource {
 
     private var mediaRecorder: MediaRecorder? = null
 
@@ -65,16 +68,36 @@ class RecordingRepository private constructor(
         }
     }
 
-    fun getDownloadUrl(): LiveData<Uri> {
-        val translationDownloadUrl = MutableLiveData<Uri>()
+    override fun getDownloadUrl(): LiveData<Uri> {
+        val downloadUrlResult = MutableLiveData<Uri>()
 
         remoteDataSource.getDownloadUrl(path, object : RemoteDataSource.LoadDownloadUrlCallback {
-            override fun onDownloadUrlReceived(downloadUrl: Uri) {
-                translationDownloadUrl.postValue(downloadUrl)
+            override fun onDownloadUrlReceived(downloadUrlResponse: Uri) {
+                downloadUrlResult.postValue(downloadUrlResponse)
             }
         })
 
-        return translationDownloadUrl
+        return downloadUrlResult
+    }
+
+    override fun getRecording(context: Context, downloadUrl: String): LiveData<RecordingEntity> {
+        val recordingResult = MutableLiveData<RecordingEntity>()
+
+        remoteDataSource.getRecording(context, downloadUrl,
+            object : RemoteDataSource.LoadRecordingCallback {
+                override fun onRecordingReceived(recordingResponse: RecordingResponse) {
+                    val recording = RecordingEntity(
+                        recordingResponse.fileName,
+                        recordingResponse.fileUrl,
+                        recordingResponse.translation,
+                        Formatter.getCurrentDate()
+                    )
+
+                    recordingResult.postValue(recording)
+                }
+            })
+
+        return recordingResult
     }
 
     companion object {

@@ -1,15 +1,17 @@
 package com.dicoding.salsahava.seeara.api
 
-import android.net.Uri
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 interface ApiService {
 
-    @GET("predict/predict")
-    suspend fun getRecording(
-        @Query("filename") fileName: String,
-        @Query("file_url") downloadUrl: Uri
-    ): RecordingResponse
+    @FormUrlEncoded
+    @POST("predict")
+    fun getRecording(
+        @Field("filename") fileName: String,
+        @Field("file_url") downloadUrl: String
+    ): Call<RecordingResponse>
 }
