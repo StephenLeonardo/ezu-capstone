@@ -83,7 +83,7 @@ def callGoogleAPI():
 
 @app.route('/test-speech', methods=['GET'])
 def testSpeech():
-    print("heehehehe")
+    # print("heehehehe")
     cwd = os.getcwd()
     filepath = os.path.join(cwd, 'exported', 'Recording.wav')
 
@@ -133,7 +133,7 @@ def predict():
         print(filename)
         print(file_url)
 
-        print('woohoo')
+        # print('woohoo')
         # Url untuk cloud storage
         # dirname = 'https://storage.googleapis.com/ezu-storage/'
         #
@@ -141,16 +141,16 @@ def predict():
         # full_name = dirname + filename
 
         #
-        print("oke")
+        # print("oke")
         z = io.BytesIO(urlopen(file_url).read())
 
 
-        print("yep")
+        # print("yep")
 
         filepath_to_save = './assets/' + 'input.mp3'
         pathlib.Path((filepath_to_save)).write_bytes(z.getbuffer())
 
-        print("yess")
+        # print("yess")
 
         # X, sample_rate = librosa.load(filepath)
 
