@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Seeara</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="splash">Seeara</string>
+
     <string name="desc">Description</string>
-    <string name="record_fragment">Record</string>
-    <string name="history_fragment">History</string>
+    <string name="record_fragment">Rekam</string>
+    <string name="history_fragment">Riwayat</string>
+    <string name="title">Halo, suara apa yang dapat kami terjemahkan untuk Anda saat ini?</string>
 </resources>

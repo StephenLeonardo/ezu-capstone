@@ -12,9 +12,8 @@ class RecorderViewModel(private val recordingRepository: RecordingRepository) : 
 
     fun stopRecording() = recordingRepository.stopRecording()
 
-    fun playRecording() = recordingRepository.playRecording()
-
     fun getDownloadUrl(): LiveData<Uri> = recordingRepository.getDownloadUrl()
 
-    fun getRecording(context: Context, downloadUrl: String) = recordingRepository.getRecording(context, downloadUrl)
+    fun getRecording(context: Context, downloadUrl: String) =
+        recordingRepository.getRecording(context, downloadUrl)
 }

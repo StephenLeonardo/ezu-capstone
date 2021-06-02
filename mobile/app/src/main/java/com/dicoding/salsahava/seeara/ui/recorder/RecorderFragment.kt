@@ -39,7 +39,6 @@ class RecorderFragment : Fragment() {
             viewModel = ViewModelProvider(this, factory)[RecorderViewModel::class.java]
 
             binding?.fabStart?.isEnabled = true
-            binding?.fabPlay?.isEnabled = false
 
             adapter = HistoryAdapter(requireActivity())
 
@@ -64,7 +63,6 @@ class RecorderFragment : Fragment() {
             }
 
             binding?.fabStop?.setOnClickListener { stopRecording() }
-            binding?.fabPlay?.setOnClickListener { playRecording() }
         }
     }
 
@@ -73,33 +71,34 @@ class RecorderFragment : Fragment() {
 
         binding?.fabStart?.visibility = View.INVISIBLE
         binding?.fabStop?.visibility = View.VISIBLE
-        binding?.fabPlay?.isEnabled = false
         Toast.makeText(context, "Recording started", Toast.LENGTH_SHORT).show()
     }
 
     private fun stopRecording() {
+        showLoading(true)
+        binding?.cvTranslation?.tvTranslation?.visibility = View.INVISIBLE
         viewModel?.stopRecording()
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    binding?.tvDownloadUrl?.text = recording.translation
-                    adapter.addItem(recording)
+                    if (recording.translation == "") showLoading(false)
+                    else {
+                        showLoading(false)
+                        binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
+                        binding?.cvTranslation?.tvTranslation?.text = recording.translation
+                        adapter.addItem(recording)
+                    }
                 })
         })
 
         binding?.fabStart?.visibility = View.VISIBLE
         binding?.fabStop?.visibility = View.INVISIBLE
-        binding?.fabPlay?.isEnabled = true
         Toast.makeText(context, "Recording stopped", Toast.LENGTH_SHORT).show()
     }
 
-    private fun playRecording() {
-        viewModel?.playRecording()
-
-        binding?.fabStart?.isEnabled = true
-        binding?.fabPlay?.isEnabled = true
-
-        Toast.makeText(context, "Playing recording", Toast.LENGTH_SHORT).show()
+    private fun showLoading(status: Boolean) {
+        if (status) binding?.cvTranslation?.progressBar?.visibility = View.VISIBLE
+        else binding?.cvTranslation?.progressBar?.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
