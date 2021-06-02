@@ -1,7 +1,6 @@
 package com.dicoding.salsahava.seeara.data.source
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -55,18 +54,6 @@ class RecordingRepository private constructor(
         mediaRecorder?.release()
 
         initRecorder()
-    }
-
-    fun playRecording() {
-        try {
-            val mediaPlayer = MediaPlayer()
-            mediaPlayer.setDataSource(path)
-            mediaPlayer.prepare()
-            mediaPlayer.start()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     override fun getDownloadUrl(): LiveData<Uri> {

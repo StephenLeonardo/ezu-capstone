@@ -51,7 +51,7 @@ class RemoteDataSource {
                         ).show()
                         Log.d(TAG, recording.message)
                     }
-                    else callback.onRecordingReceived(recording)
+                    callback.onRecordingReceived(recording)
                 }
             }
 

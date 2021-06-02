@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/turquoise_700"
     tools:context=".SplashActivity">
 
     <TextView
@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="305dp"
-        android:text="@string/splash"
+        android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/beige"
         android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/black"
+        android:indeterminateTint="@color/beige"
         app:layout_constraintTop_toBottomOf="@+id/tv_splash"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
