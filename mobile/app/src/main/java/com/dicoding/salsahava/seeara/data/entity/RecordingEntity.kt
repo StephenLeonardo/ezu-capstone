@@ -1,18 +1,20 @@
 package com.dicoding.salsahava.seeara.data.entity
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-@Entity
+@Entity(tableName = "recordEntities")
 @Parcelize
 data class RecordingEntity(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
-    var id: Int = 0,
+    var id: Int? = null ,
 
     @ColumnInfo(name = "filename")
     var fileName: String? = null,

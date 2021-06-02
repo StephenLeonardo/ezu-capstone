@@ -21,7 +21,7 @@ abstract class RecordingDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext,
                     RecordingDatabase::class.java,
-                    "record.db"
+                    "Record.db"
                 ).build().apply { INSTANCE = this }
             }
     }

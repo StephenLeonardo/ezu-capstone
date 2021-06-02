@@ -8,15 +8,12 @@ import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 interface RecordingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecord(record: RecordingEntity)
-
-    @Update
-    fun updateRecord(record: RecordingEntity)
+    fun insertRecord(record: List<RecordingEntity>)
 
     @Delete
-    fun deleteRecord(record: RecordingEntity)
+    fun deleteRecord(record: List<RecordingEntity>)
 
-    @Query("SELECT * FROM recordingentity ORDER BY id ASC")
+    @Query("SELECT * FROM recordEntities ORDER BY id ASC")
     fun getAllRecord(): LiveData<List<RecordingEntity>>
 
 }

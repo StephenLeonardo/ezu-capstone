@@ -15,9 +15,7 @@ class LocalDataSource private constructor(private val mRecordingDao: RecordingDa
 
     fun getAllRecord(): LiveData<List<RecordingEntity>> =  mRecordingDao.getAllRecord()
 
-    fun insertRecord(record: RecordingEntity) = mRecordingDao.insertRecord(record)
+    fun insertRecord(record: List<RecordingEntity>) = mRecordingDao.insertRecord(record)
 
-    fun updateRecord(record: RecordingEntity) = mRecordingDao.updateRecord(record)
-
-    fun deleteRecord(record: RecordingEntity) = mRecordingDao.deleteRecord(record)
+    fun deleteRecord(record: List<RecordingEntity>) = mRecordingDao.deleteRecord(record)
 }

@@ -9,15 +9,11 @@ class HistoryViewModel(private val recordingRepository: RecordingRepository) : V
 
     fun getAllRecord(): LiveData<List<RecordingEntity>> = recordingRepository.getAllRecord()
 
-    fun insertRecord(record: RecordingEntity) {
+    fun insertRecord(record: List<RecordingEntity>) {
         recordingRepository.insertRecord(record)
     }
 
-    fun updateRecord(record: RecordingEntity) {
-        recordingRepository.updateRecord(record)
-    }
-
-    fun deleteRecord(record: RecordingEntity) {
+    fun deleteRecord(record: List<RecordingEntity>) {
         recordingRepository.deleteRecord(record)
     }
 }

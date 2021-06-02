@@ -105,15 +105,11 @@ class RecordingRepository private constructor(
     override fun getAllRecord(): LiveData<List<RecordingEntity>> =
         localDataSource.getAllRecord()
 
-    override fun insertRecord(record: RecordingEntity) {
+    override fun insertRecord(record: List<RecordingEntity>) {
         localDataSource.insertRecord(record)
     }
 
-    override fun updateRecord(record: RecordingEntity) {
-        localDataSource.updateRecord(record)
-    }
-
-    override fun deleteRecord(record: RecordingEntity) {
+    override fun deleteRecord(record: List<RecordingEntity>) {
         localDataSource.deleteRecord(record)
     }
 

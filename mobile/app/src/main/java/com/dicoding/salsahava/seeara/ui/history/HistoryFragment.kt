@@ -1,14 +1,16 @@
 package com.dicoding.salsahava.seeara.ui.history
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dicoding.salsahava.seeara.R
+import androidx.fragment.app.Fragment
+import com.dicoding.salsahava.seeara.databinding.HistoryFragmentBinding
 
 class HistoryFragment : Fragment() {
+
+    private var _fragmentHistoryBinding: HistoryFragmentBinding? = null
+    private val binding get() = _fragmentHistoryBinding
 
     private lateinit var viewModel: HistoryViewModel
 
@@ -16,7 +18,8 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.history_fragment, container, false)
+        _fragmentHistoryBinding = HistoryFragmentBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
