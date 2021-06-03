@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.FragmentRecorderBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
@@ -83,8 +84,8 @@ class RecorderFragment : Fragment() {
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
                     if (recording.translation == "") {
-                        viewModel?.insertRecord(recording)
                         showLoading(false)
+                        viewModel?.insertRecord(recording as RecordingEntity)
                     }
                     else {
                         showLoading(false)

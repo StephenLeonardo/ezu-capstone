@@ -10,6 +10,7 @@ import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
 import com.dicoding.salsahava.seeara.utils.Formatter
 import java.io.IOException
+import kotlin.random.Random
 
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
@@ -75,7 +76,7 @@ class RecordingRepository private constructor(
             object : RemoteDataSource.LoadRecordingCallback {
                 override fun onRecordingReceived(recordingResponse: RecordingResponse) {
                     val recording = RecordingEntity(
-                        0,
+                        Random.nextInt(0, 10),
                         recordingResponse.fileName,
                         recordingResponse.fileUrl,
                         recordingResponse.translation,
@@ -83,6 +84,7 @@ class RecordingRepository private constructor(
                     )
                     recordingResult.postValue(recording)
                 }
+
             })
 
         return recordingResult

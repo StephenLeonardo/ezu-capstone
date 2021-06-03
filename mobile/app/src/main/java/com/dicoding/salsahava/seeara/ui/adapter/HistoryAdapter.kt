@@ -13,10 +13,12 @@ class HistoryAdapter(private val activity: Activity) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     private var listRecording = ArrayList<RecordingEntity>()
-        set(listRecording) {
-            if (listRecording.size > 0) this.listRecording.clear()
-            this.listRecording.addAll(listRecording)
-            notifyDataSetChanged()
+
+        fun setHistory(history: List<RecordingEntity>?) {
+            if (history == null) return
+            this.listRecording.clear()
+            this.listRecording.addAll(history)
+            this.notifyDataSetChanged()
         }
 
     fun addItem(recording: RecordingEntity) {

@@ -18,16 +18,8 @@ class RecorderViewModel(private val recordingRepository: RecordingRepository) : 
     fun getRecording(context: Context, downloadUrl: String) =
         recordingRepository.getRecording(context, downloadUrl)
 
-
     fun insertRecord(record: RecordingEntity) {
         recordingRepository.insertRecord(record)
     }
 
-    fun updateRecord(record: RecordingEntity) {
-        recordingRepository.updateRecord(record)
-    }
-
-    fun deleteRecord(record: RecordingEntity) {
-        recordingRepository.deleteRecord(record)
-    }
 }
