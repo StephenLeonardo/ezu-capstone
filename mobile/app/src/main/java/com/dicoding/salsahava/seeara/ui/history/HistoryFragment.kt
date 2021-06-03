@@ -65,4 +65,9 @@ class HistoryFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentHistoryBinding = null
+    }
 }

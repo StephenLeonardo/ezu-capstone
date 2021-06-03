@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.data.source.RecordingRepository
 
 class RecorderViewModel(private val recordingRepository: RecordingRepository) : ViewModel() {
@@ -16,4 +17,9 @@ class RecorderViewModel(private val recordingRepository: RecordingRepository) : 
 
     fun getRecording(context: Context, downloadUrl: String) =
         recordingRepository.getRecording(context, downloadUrl)
+
+    fun insertRecord(record: RecordingEntity) {
+        recordingRepository.insertRecord(record)
+    }
+
 }
