@@ -10,4 +10,12 @@ interface RecordingDataSource {
     fun getDownloadUrl(): LiveData<Uri>
 
     fun getRecording(context: Context, downloadUrl: String): LiveData<RecordingEntity>
+
+    fun getAllRecord(): LiveData<List<RecordingEntity>>
+
+    fun insertRecord(record: RecordingEntity)
+
+    fun updateRecord(record: RecordingEntity)
+
+    fun deleteRecord(record: RecordingEntity)
 }

@@ -1,7 +1,6 @@
 package com.dicoding.salsahava.seeara.data.source
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -14,7 +13,8 @@ import java.io.IOException
 
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val path: String
+    private val path: String,
+    private val localDataSource: LocalDataSource
 ) : RecordingDataSource {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -56,18 +56,6 @@ class RecordingRepository private constructor(
         initRecorder()
     }
 
-    fun playRecording() {
-        try {
-            val mediaPlayer = MediaPlayer()
-            mediaPlayer.setDataSource(path)
-            mediaPlayer.prepare()
-            mediaPlayer.start()
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     override fun getDownloadUrl(): LiveData<Uri> {
         val downloadUrlResult = MutableLiveData<Uri>()
 
@@ -87,6 +75,7 @@ class RecordingRepository private constructor(
             object : RemoteDataSource.LoadRecordingCallback {
                 override fun onRecordingReceived(recordingResponse: RecordingResponse) {
                     val recording = RecordingEntity(
+                        0,
                         recordingResponse.fileName,
                         recordingResponse.fileUrl,
                         recordingResponse.translation,
@@ -100,13 +89,32 @@ class RecordingRepository private constructor(
         return recordingResult
     }
 
+    override fun getAllRecord(): LiveData<List<RecordingEntity>> =
+        localDataSource.getAllRecord()
+
+    override fun insertRecord(record: RecordingEntity) {
+        localDataSource.insertRecord(record)
+    }
+
+    override fun updateRecord(record: RecordingEntity) {
+        localDataSource.updateRecord(record)
+    }
+
+    override fun deleteRecord(record: RecordingEntity) {
+        localDataSource.deleteRecord(record)
+    }
+
     companion object {
         @Volatile
         private var instance: RecordingRepository? = null
 
-        fun getInstance(remoteDataSource: RemoteDataSource, path: String): RecordingRepository =
+        fun getInstance(
+            remoteDataSource: RemoteDataSource,
+            path: String,
+            localDataSource: LocalDataSource
+        ): RecordingRepository =
             instance ?: synchronized(this) {
-                instance ?: RecordingRepository(remoteDataSource, path).apply {
+                instance ?: RecordingRepository(remoteDataSource, path, localDataSource).apply {
                     instance = this
                 }
             }
