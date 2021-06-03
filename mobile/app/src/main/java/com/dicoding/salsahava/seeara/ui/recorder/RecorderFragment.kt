@@ -84,8 +84,8 @@ class RecorderFragment : Fragment() {
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
                     if (recording.translation == "") {
-                        showLoading(false)
                         viewModel?.insertRecord(recording as RecordingEntity)
+                        showLoading(false)
                     }
                     else {
                         showLoading(false)
