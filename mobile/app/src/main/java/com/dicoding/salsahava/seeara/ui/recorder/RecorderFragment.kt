@@ -81,7 +81,7 @@ class RecorderFragment : Fragment() {
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    if (recording.translation == "") showLoading(false)
+                    if (recording == null || recording.translation == "") showLoading(false)
                     else {
                         showLoading(false)
                         binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE

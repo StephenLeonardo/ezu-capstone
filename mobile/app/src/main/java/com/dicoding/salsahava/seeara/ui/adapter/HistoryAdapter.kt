@@ -12,7 +12,7 @@ import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 class HistoryAdapter(private val activity: Activity) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
-    private var listRecording = ArrayList<RecordingEntity>()
+    var listRecording = ArrayList<RecordingEntity>()
         set(listRecording) {
             if (listRecording.size > 0) this.listRecording.clear()
             this.listRecording.addAll(listRecording)
