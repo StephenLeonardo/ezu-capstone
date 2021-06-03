@@ -13,7 +13,9 @@ interface RecordingDataSource {
 
     fun getAllRecord(): LiveData<List<RecordingEntity>>
 
-    fun insertRecord(record: List<RecordingEntity>)
+    fun insertRecord(record: RecordingEntity)
 
-    fun deleteRecord(record: List<RecordingEntity>)
+    fun updateRecord(record: RecordingEntity)
+
+    fun deleteRecord(record: RecordingEntity)
 }

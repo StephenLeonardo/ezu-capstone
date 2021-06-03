@@ -81,7 +81,6 @@ class RecordingRepository private constructor(
                         recordingResponse.translation,
                         Formatter.getCurrentDate()
                     )
-
                     recordingResult.postValue(recording)
                 }
             })
@@ -92,11 +91,15 @@ class RecordingRepository private constructor(
     override fun getAllRecord(): LiveData<List<RecordingEntity>> =
         localDataSource.getAllRecord()
 
-    override fun insertRecord(record: List<RecordingEntity>) {
+    override fun insertRecord(record: RecordingEntity) {
         localDataSource.insertRecord(record)
     }
 
-    override fun deleteRecord(record: List<RecordingEntity>) {
+    override fun updateRecord(record: RecordingEntity) {
+        localDataSource.updateRecord(record)
+    }
+
+    override fun deleteRecord(record: RecordingEntity) {
         localDataSource.deleteRecord(record)
     }
 

@@ -62,6 +62,7 @@ class RecorderFragment : Fragment() {
                 } else startRecording()
             }
 
+
             binding?.fabStop?.setOnClickListener { stopRecording() }
         }
     }
@@ -81,7 +82,10 @@ class RecorderFragment : Fragment() {
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    if (recording.translation == "") showLoading(false)
+                    if (recording.translation == "") {
+                        viewModel?.insertRecord(recording)
+                        showLoading(false)
+                    }
                     else {
                         showLoading(false)
                         binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
