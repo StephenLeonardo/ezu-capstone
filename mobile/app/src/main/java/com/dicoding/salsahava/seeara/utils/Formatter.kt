@@ -1,7 +1,7 @@
 package com.dicoding.salsahava.seeara.utils
 
 import androidx.lifecycle.LiveData
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

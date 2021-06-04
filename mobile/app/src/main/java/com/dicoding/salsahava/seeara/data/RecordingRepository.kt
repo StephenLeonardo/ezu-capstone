@@ -1,11 +1,12 @@
-package com.dicoding.salsahava.seeara.data.source
+package com.dicoding.salsahava.seeara.data
 
 import android.content.Context
 import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.LocalDataSource
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
 import com.dicoding.salsahava.seeara.utils.Formatter

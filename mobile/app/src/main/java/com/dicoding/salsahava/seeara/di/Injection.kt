@@ -3,9 +3,9 @@ package com.dicoding.salsahava.seeara.di
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Environment
-import com.dicoding.salsahava.seeara.data.room.RecordingDatabase
-import com.dicoding.salsahava.seeara.data.source.LocalDataSource
-import com.dicoding.salsahava.seeara.data.source.RecordingRepository
+import com.dicoding.salsahava.seeara.data.source.local.room.RecordingDatabase
+import com.dicoding.salsahava.seeara.data.source.local.LocalDataSource
+import com.dicoding.salsahava.seeara.data.RecordingRepository
 import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
 
 object Injection {

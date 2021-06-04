@@ -1,9 +1,9 @@
-package com.dicoding.salsahava.seeara.data.room
+package com.dicoding.salsahava.seeara.data.source.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 
 @Dao
 interface RecordingDao {

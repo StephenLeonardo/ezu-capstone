@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.data.entity
+package com.dicoding.salsahava.seeara.data.source.local.entity
 
 import android.os.Parcelable
 import androidx.annotation.NonNull

@@ -1,10 +1,10 @@
-package com.dicoding.salsahava.seeara.data.room
+package com.dicoding.salsahava.seeara.data.source.local.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 
 
 @Database(entities = [RecordingEntity::class], version = 1, exportSchema = false)

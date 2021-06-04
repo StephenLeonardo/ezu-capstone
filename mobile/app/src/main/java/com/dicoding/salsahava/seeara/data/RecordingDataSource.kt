@@ -1,9 +1,9 @@
-package com.dicoding.salsahava.seeara.data.source
+package com.dicoding.salsahava.seeara.data
 
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 
 interface RecordingDataSource {
 
