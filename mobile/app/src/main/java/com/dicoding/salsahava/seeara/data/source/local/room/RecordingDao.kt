@@ -20,4 +20,7 @@ interface RecordingDao {
     @Query("SELECT * FROM recordEntities ORDER BY id ASC")
     fun getAllRecord(): LiveData<List<RecordingEntity>>
 
+    @Query("SELECT * FROM recordEntities WHERE id = :id")
+    fun getRecordById(id: Int): LiveData<RecordingEntity>
+
 }

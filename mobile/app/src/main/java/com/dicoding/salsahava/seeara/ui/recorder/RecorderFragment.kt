@@ -11,10 +11,10 @@ import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.FragmentRecorderBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
+import com.dicoding.salsahava.seeara.vo.Status
 
 class RecorderFragment : Fragment() {
 
@@ -77,21 +77,40 @@ class RecorderFragment : Fragment() {
     }
 
     private fun stopRecording() {
-        showLoading(true)
         binding?.cvTranslation?.tvTranslation?.visibility = View.INVISIBLE
         viewModel?.stopRecording()
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    if (recording == null || recording.translation == "") {
-                        showLoading(false)
-                        viewModel?.insertRecord(recording as RecordingEntity)
-                    } else {
-                        showLoading(false)
-                        binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
-                        binding?.cvTranslation?.tvTranslation?.text = recording.translation
-                        adapter.addItem(recording)
+                    if (recording != null) {
+                        when (recording.status) {
+                            Status.LOADING -> showLoading(true)
+
+                            Status.SUCCESS -> {
+                                showLoading(false)
+
+                                recording.data?.let { adapter.addItem(it) }
+                                binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
+                                binding?.cvTranslation?.tvTranslation?.text =
+                                    recording.data?.translation
+                            }
+
+                            Status.ERROR -> {
+                                showLoading(false)
+                                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
                     }
+
+//                    if (recording == null || recording.translation == "") {
+//                        showLoading(false)
+//                    } else {
+//                        showLoading(false)
+//                        binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
+//                        binding?.cvTranslation?.tvTranslation?.text = recording.translation
+//                        adapter.addItem(recording)
+//                    }
                 })
         })
 

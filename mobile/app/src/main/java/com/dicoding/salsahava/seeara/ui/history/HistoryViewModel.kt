@@ -8,5 +8,4 @@ import com.dicoding.salsahava.seeara.data.RecordingRepository
 class HistoryViewModel(private val recordingRepository: RecordingRepository) : ViewModel() {
 
     fun getAllRecord(): LiveData<List<RecordingEntity>> = recordingRepository.getAllRecord()
-
 }

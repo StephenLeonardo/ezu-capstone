@@ -4,18 +4,13 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.vo.Resource
 
 interface RecordingDataSource {
 
     fun getDownloadUrl(): LiveData<Uri>
 
-    fun getRecording(context: Context, downloadUrl: String): LiveData<RecordingEntity>
+    fun getRecording(context: Context, downloadUrl: String): LiveData<Resource<RecordingEntity>>
 
     fun getAllRecord(): LiveData<List<RecordingEntity>>
-
-    fun insertRecord(record: RecordingEntity)
-
-    fun updateRecord(record: RecordingEntity)
-
-    fun deleteRecord(record: RecordingEntity)
 }

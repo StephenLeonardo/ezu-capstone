@@ -47,5 +47,4 @@ class HistoryAdapter(private val activity: Activity) :
             binding.tvHistoryTranslation.text = history.translation
         }
     }
-
 }
