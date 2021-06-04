@@ -26,7 +26,7 @@ object Formatter {
                     recording.downloadUrl,
                     recording.translation,
                     recording.date
-                )
+                    )
                 )
             }
         }

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.salsahava.seeara.data.room.RecordingDao
+import com.dicoding.salsahava.seeara.data.source.LocalDataSource
 import com.dicoding.salsahava.seeara.databinding.HistoryFragmentBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.utils.Formatter

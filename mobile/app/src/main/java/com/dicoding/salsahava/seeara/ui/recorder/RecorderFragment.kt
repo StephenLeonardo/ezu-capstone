@@ -62,8 +62,6 @@ class RecorderFragment : Fragment() {
                     )
                 } else startRecording()
             }
-
-
             binding?.fabStop?.setOnClickListener { stopRecording() }
         }
     }
@@ -102,15 +100,6 @@ class RecorderFragment : Fragment() {
                             }
                         }
                     }
-
-//                    if (recording == null || recording.translation == "") {
-//                        showLoading(false)
-//                    } else {
-//                        showLoading(false)
-//                        binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
-//                        binding?.cvTranslation?.tvTranslation?.text = recording.translation
-//                        adapter.addItem(recording)
-//                    }
                 })
         })
 
