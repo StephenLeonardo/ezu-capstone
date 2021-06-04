@@ -1,5 +1,6 @@
 package com.dicoding.salsahava.seeara.di
 
+import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Environment

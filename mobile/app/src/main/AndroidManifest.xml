@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.dicoding.salsahava.seeara.ui.home.HomeActivity"/>
+        <activity android:name="com.dicoding.salsahava.seeara.ui.home.HomeActivity" />
 
     </application>
 

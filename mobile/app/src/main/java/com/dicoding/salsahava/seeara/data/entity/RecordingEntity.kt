@@ -11,20 +11,20 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RecordingEntity(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
-    var id: Int? = null ,
+    var id: Int,
 
     @ColumnInfo(name = "filename")
-    var fileName: String? = null,
+    var fileName: String,
 
     @ColumnInfo(name = "url")
-    var downloadUrl: String? = null,
+    var downloadUrl: String,
 
     @ColumnInfo(name = "translation")
-    var translation: String? = null,
+    var translation: String,
 
     @ColumnInfo(name = "date")
-    var date: String? = null
+    var date: String
 ) : Parcelable

@@ -8,7 +8,7 @@ import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
 @Dao
 interface RecordingDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertRecord(record: RecordingEntity)
 
     @Update

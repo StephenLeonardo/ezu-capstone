@@ -62,8 +62,6 @@ class RecorderFragment : Fragment() {
                     )
                 } else startRecording()
             }
-
-
             binding?.fabStop?.setOnClickListener { stopRecording() }
         }
     }

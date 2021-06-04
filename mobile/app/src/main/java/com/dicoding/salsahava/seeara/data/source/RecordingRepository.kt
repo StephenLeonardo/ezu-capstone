@@ -15,7 +15,7 @@ import kotlin.random.Random
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val path: String,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
 ) : RecordingDataSource {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -76,7 +76,7 @@ class RecordingRepository private constructor(
             object : RemoteDataSource.LoadRecordingCallback {
                 override fun onRecordingReceived(recordingResponse: RecordingResponse) {
                     val recording = RecordingEntity(
-                        Random.nextInt(0, 10),
+                        Random.nextInt(1, 10),
                         recordingResponse.fileName,
                         recordingResponse.fileUrl,
                         recordingResponse.translation,
@@ -84,7 +84,6 @@ class RecordingRepository private constructor(
                     )
                     recordingResult.postValue(recording)
                 }
-
             })
 
         return recordingResult
@@ -112,7 +111,7 @@ class RecordingRepository private constructor(
         fun getInstance(
             remoteDataSource: RemoteDataSource,
             path: String,
-            localDataSource: LocalDataSource
+            localDataSource: LocalDataSource,
         ): RecordingRepository =
             instance ?: synchronized(this) {
                 instance ?: RecordingRepository(remoteDataSource, path, localDataSource).apply {
