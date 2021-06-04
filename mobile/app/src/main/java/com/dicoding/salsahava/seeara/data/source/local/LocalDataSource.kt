@@ -1,8 +1,8 @@
-package com.dicoding.salsahava.seeara.data.source
+package com.dicoding.salsahava.seeara.data.source.local
 
 import androidx.lifecycle.LiveData
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
-import com.dicoding.salsahava.seeara.data.room.RecordingDao
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.room.RecordingDao
 
 class LocalDataSource private constructor(private val mRecordingDao: RecordingDao){
 
@@ -14,6 +14,8 @@ class LocalDataSource private constructor(private val mRecordingDao: RecordingDa
     }
 
     fun getAllRecord(): LiveData<List<RecordingEntity>> =  mRecordingDao.getAllRecord()
+
+    fun getRecordById(id: Int): LiveData<RecordingEntity> = mRecordingDao.getRecordById(id)
 
     fun insertRecord(record: RecordingEntity) = mRecordingDao.insertRecord(record)
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.salsahava.seeara.R
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 
 class HistoryAdapter(private val activity: Activity) :
@@ -47,5 +47,4 @@ class HistoryAdapter(private val activity: Activity) :
             binding.tvHistoryTranslation.text = history.translation
         }
     }
-
 }
