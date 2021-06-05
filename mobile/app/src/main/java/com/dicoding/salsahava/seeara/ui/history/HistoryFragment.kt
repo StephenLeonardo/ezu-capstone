@@ -10,12 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.salsahava.seeara.databinding.HistoryFragmentBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
-import com.dicoding.salsahava.seeara.utils.Formatter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class HistoryFragment : Fragment() {
 
@@ -23,7 +18,6 @@ class HistoryFragment : Fragment() {
     private val binding get() = _fragmentHistoryBinding
 
     private var viewModel: HistoryViewModel? = null
-    private lateinit var adapter: HistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,30 +45,6 @@ class HistoryFragment : Fragment() {
             binding?.rvHistory?.layoutManager = LinearLayoutManager(context)
             binding?.rvHistory?.setHasFixedSize(true)
             binding?.rvHistory?.adapter = adapter
-
-//            binding?.rvHistory?.apply {
-//                layoutManager = LinearLayoutManager(context)
-//                setHasFixedSize(true)
-//            }
-//
-//            adapter = HistoryAdapter(requireActivity())
-//
-//            loadHistoryAsync()
-        }
-    }
-
-    private fun loadHistoryAsync() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val deferredHistory = async(Dispatchers.IO) {
-                val recordings = viewModel?.getAllRecord()
-                Formatter.mapRecordingFromDatabaseToArrayList(recordings)
-            }
-
-            val history = deferredHistory.await()
-            if (history.size > 0) adapter.listRecording = history
-            else {
-                adapter.listRecording = ArrayList()
-            }
         }
     }
 

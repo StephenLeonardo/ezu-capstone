@@ -72,10 +72,6 @@ class RemoteDataSource {
         fun onDownloadUrlReceived(downloadUrlResponse: Uri)
     }
 
-    interface LoadRecordingCallback {
-        fun onRecordingReceived(recordingResponse: RecordingResponse)
-    }
-
     companion object {
         @Volatile
         private var instance: RemoteDataSource? = null
