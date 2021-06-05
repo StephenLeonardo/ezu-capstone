@@ -9,15 +9,17 @@ import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 
-class HistoryAdapter(private val activity: Activity) :
+class HistoryAdapter(activity: Activity) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     var listRecording = ArrayList<RecordingEntity>()
-        set(listRecording) {
-            if (listRecording.size > 0) this.listRecording.clear()
-            this.listRecording.addAll(listRecording)
-            notifyDataSetChanged()
-        }
+
+    fun setRecorded(recording: List<RecordingEntity>) {
+        if (recording == null) return
+        this.listRecording.clear()
+        this.listRecording.addAll(recording)
+        this.notifyDataSetChanged()
+    }
 
     fun addItem(recording: RecordingEntity) {
         this.listRecording.add(recording)

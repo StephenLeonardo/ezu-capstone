@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.salsahava.seeara.data.room.RecordingDao
-import com.dicoding.salsahava.seeara.data.source.LocalDataSource
 import com.dicoding.salsahava.seeara.databinding.HistoryFragmentBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.utils.Formatter
@@ -42,14 +40,26 @@ class HistoryFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(context as Context)
             viewModel = ViewModelProvider(this, factory)[HistoryViewModel::class.java]
 
-            binding?.rvHistory?.apply {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-            }
+            val adapter = HistoryAdapter(requireActivity())
+            binding?.progressBar?.visibility = View.VISIBLE
+            viewModel?.getAllRecord()?.observe(viewLifecycleOwner, { recorded ->
+                binding?.progressBar?.visibility = View.GONE
+                adapter.setRecorded(recorded)
+                adapter.notifyDataSetChanged()
+            })
 
-            adapter = HistoryAdapter(requireActivity())
+            binding?.rvHistory?.layoutManager = LinearLayoutManager(context)
+            binding?.rvHistory?.setHasFixedSize(true)
+            binding?.rvHistory?.adapter = adapter
 
-            loadHistoryAsync()
+//            binding?.rvHistory?.apply {
+//                layoutManager = LinearLayoutManager(context)
+//                setHasFixedSize(true)
+//            }
+//
+//            adapter = HistoryAdapter(requireActivity())
+//
+//            loadHistoryAsync()
         }
     }
 

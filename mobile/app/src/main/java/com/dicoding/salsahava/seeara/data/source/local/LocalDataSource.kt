@@ -19,8 +19,12 @@ class LocalDataSource private constructor(private val mRecordingDao: RecordingDa
 
     fun insertRecord(record: RecordingEntity) = mRecordingDao.insertRecord(record)
 
-    fun deleteRecord(record: RecordingEntity) = mRecordingDao.deleteRecord(record)
+    fun setRecorded(record: RecordingEntity) {
+        mRecordingDao.updateRecord(record)
+    }
 
-    fun updateRecord(record: RecordingEntity) = mRecordingDao.updateRecord(record)
+//    fun deleteRecord(record: RecordingEntity) = mRecordingDao.deleteRecord(record)
+//
+//    fun updateRecord(record: RecordingEntity) = mRecordingDao.updateRecord(record)
 
 }

@@ -3,14 +3,8 @@ package com.dicoding.salsahava.seeara.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-<<<<<<< HEAD
-import com.dicoding.salsahava.seeara.di.Injection
 import com.dicoding.salsahava.seeara.data.RecordingRepository
-import com.dicoding.salsahava.seeara.ui.recorder.RecorderViewModel
-=======
-import com.dicoding.salsahava.seeara.data.source.RecordingRepository
 import com.dicoding.salsahava.seeara.di.Injection
->>>>>>> f5839f93993fdf1f823c866f1a7a978c2e5820eb
 import com.dicoding.salsahava.seeara.ui.history.HistoryViewModel
 import com.dicoding.salsahava.seeara.ui.recorder.RecorderViewModel
 

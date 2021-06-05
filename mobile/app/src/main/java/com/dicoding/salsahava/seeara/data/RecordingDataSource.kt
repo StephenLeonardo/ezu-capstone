@@ -13,4 +13,6 @@ interface RecordingDataSource {
     fun getRecording(context: Context, downloadUrl: String): LiveData<Resource<RecordingEntity>>
 
     fun getAllRecord(): LiveData<List<RecordingEntity>>
+
+    fun setRecorded(recordingEntity: RecordingEntity)
 }

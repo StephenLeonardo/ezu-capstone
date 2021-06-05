@@ -105,6 +105,10 @@ class RecordingRepository private constructor(
     override fun getAllRecord(): LiveData<List<RecordingEntity>> =
         localDataSource.getAllRecord()
 
+    override fun setRecorded(recordingEntity: RecordingEntity) {
+        appExecutors.diskIO().execute { localDataSource.setRecorded(recordingEntity) }
+    }
+
     companion object {
         @Volatile
         private var instance: RecordingRepository? = null

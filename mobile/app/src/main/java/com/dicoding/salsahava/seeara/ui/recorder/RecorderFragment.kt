@@ -95,6 +95,7 @@ class RecorderFragment : Fragment() {
 
                             Status.ERROR -> {
                                 showLoading(false)
+
                                 Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                                     .show()
                             }
