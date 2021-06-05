@@ -6,18 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.salsahava.seeara.R
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 
-class HistoryAdapter(private val activity: Activity) :
+class HistoryAdapter(activity: Activity) :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
-    private var listRecording = ArrayList<RecordingEntity>()
-        set(listRecording) {
-            if (listRecording.size > 0) this.listRecording.clear()
-            this.listRecording.addAll(listRecording)
-            notifyDataSetChanged()
-        }
+    var listRecording = ArrayList<RecordingEntity>()
+
+    fun setRecorded(recording: List<RecordingEntity>) {
+        if (recording == null) return
+        this.listRecording.clear()
+        this.listRecording.addAll(recording)
+        this.notifyDataSetChanged()
+    }
 
     fun addItem(recording: RecordingEntity) {
         this.listRecording.add(recording)
@@ -47,5 +49,4 @@ class HistoryAdapter(private val activity: Activity) :
             binding.tvHistoryTranslation.text = history.translation
         }
     }
-
 }

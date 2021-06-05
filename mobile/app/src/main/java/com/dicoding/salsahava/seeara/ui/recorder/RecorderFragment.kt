@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicoding.salsahava.seeara.databinding.FragmentRecorderBinding
 import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
+import com.dicoding.salsahava.seeara.vo.Status
 
 class RecorderFragment : Fragment() {
 
@@ -61,7 +62,6 @@ class RecorderFragment : Fragment() {
                     )
                 } else startRecording()
             }
-
             binding?.fabStop?.setOnClickListener { stopRecording() }
         }
     }
@@ -75,18 +75,31 @@ class RecorderFragment : Fragment() {
     }
 
     private fun stopRecording() {
-        showLoading(true)
         binding?.cvTranslation?.tvTranslation?.visibility = View.INVISIBLE
         viewModel?.stopRecording()
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
                 ?.observe(viewLifecycleOwner, { recording ->
-                    if (recording.translation == "") showLoading(false)
-                    else {
-                        showLoading(false)
-                        binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
-                        binding?.cvTranslation?.tvTranslation?.text = recording.translation
-                        adapter.addItem(recording)
+                    if (recording != null) {
+                        when (recording.status) {
+                            Status.LOADING -> showLoading(true)
+
+                            Status.SUCCESS -> {
+                                showLoading(false)
+
+                                recording.data?.let { adapter.addItem(it) }
+                                binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
+                                binding?.cvTranslation?.tvTranslation?.text =
+                                    recording.data?.translation
+                            }
+
+                            Status.ERROR -> {
+                                showLoading(false)
+
+                                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
                     }
                 })
         })

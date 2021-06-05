@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dicoding.salsahava.seeara.api.ApiConfig
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
 import com.google.firebase.ktx.Firebase
@@ -33,7 +35,9 @@ class RemoteDataSource {
         }
     }
 
-    fun getRecording(context: Context, downloadUrl: String, callback: LoadRecordingCallback) {
+    fun getRecording(context: Context, downloadUrl: String): LiveData<ApiResponse<RecordingResponse>> {
+        val recordingResult = MutableLiveData<ApiResponse<RecordingResponse>>()
+
         val client = ApiConfig.provideApiService().getRecording(fileName, downloadUrl)
         client.enqueue(object : Callback<RecordingResponse> {
             override fun onResponse(
@@ -51,7 +55,8 @@ class RemoteDataSource {
                         ).show()
                         Log.d(TAG, recording.message)
                     }
-                    callback.onRecordingReceived(recording)
+
+                    recordingResult.value = ApiResponse.success(recording)
                 }
             }
 
@@ -59,14 +64,12 @@ class RemoteDataSource {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+
+        return recordingResult
     }
 
     interface LoadDownloadUrlCallback {
         fun onDownloadUrlReceived(downloadUrlResponse: Uri)
-    }
-
-    interface LoadRecordingCallback {
-        fun onRecordingReceived(recordingResponse: RecordingResponse)
     }
 
     companion object {

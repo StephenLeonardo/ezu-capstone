@@ -1,20 +1,26 @@
-package com.dicoding.salsahava.seeara.data.source
+package com.dicoding.salsahava.seeara.data
 
 import android.content.Context
 import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dicoding.salsahava.seeara.data.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.local.LocalDataSource
+import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
+import com.dicoding.salsahava.seeara.data.source.remote.ApiResponse
 import com.dicoding.salsahava.seeara.data.source.remote.RemoteDataSource
 import com.dicoding.salsahava.seeara.data.source.remote.response.RecordingResponse
+import com.dicoding.salsahava.seeara.utils.AppExecutors
 import com.dicoding.salsahava.seeara.utils.Formatter
+import com.dicoding.salsahava.seeara.vo.Resource
 import java.io.IOException
+import kotlin.random.Random
 
 class RecordingRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val path: String,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val appExecutors: AppExecutors
 ) : RecordingDataSource {
 
     private var mediaRecorder: MediaRecorder? = null
@@ -68,40 +74,39 @@ class RecordingRepository private constructor(
         return downloadUrlResult
     }
 
-    override fun getRecording(context: Context, downloadUrl: String): LiveData<RecordingEntity> {
-        val recordingResult = MutableLiveData<RecordingEntity>()
+    override fun getRecording(
+        context: Context,
+        downloadUrl: String
+    ): LiveData<Resource<RecordingEntity>> {
 
-        remoteDataSource.getRecording(context, downloadUrl,
-            object : RemoteDataSource.LoadRecordingCallback {
-                override fun onRecordingReceived(recordingResponse: RecordingResponse) {
-                    val recording = RecordingEntity(
-                        0,
-                        recordingResponse.fileName,
-                        recordingResponse.fileUrl,
-                        recordingResponse.translation,
-                        Formatter.getCurrentDate()
-                    )
+        return object : NetworkBoundResource<RecordingEntity, RecordingResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<RecordingEntity> = localDataSource.getRecordById(0)
 
-                    recordingResult.postValue(recording)
-                }
-            })
+            override fun shouldFetch(data: RecordingEntity?): Boolean =
+                true
 
-        return recordingResult
+            override fun createCall(): LiveData<ApiResponse<RecordingResponse>> =
+                remoteDataSource.getRecording(context, downloadUrl)
+
+            override fun saveCallResult(data: RecordingResponse) {
+                val recording = RecordingEntity(
+                    Random.nextInt(0, 100),
+                    data.fileName,
+                    data.fileUrl,
+                    data.translation,
+                    Formatter.getCurrentDate()
+                )
+
+                localDataSource.insertRecord(recording)
+            }
+        }.asLiveData()
     }
 
     override fun getAllRecord(): LiveData<List<RecordingEntity>> =
         localDataSource.getAllRecord()
 
-    override fun insertRecord(record: RecordingEntity) {
-        localDataSource.insertRecord(record)
-    }
-
-    override fun updateRecord(record: RecordingEntity) {
-        localDataSource.updateRecord(record)
-    }
-
-    override fun deleteRecord(record: RecordingEntity) {
-        localDataSource.deleteRecord(record)
+    override fun setRecorded(recordingEntity: RecordingEntity) {
+        appExecutors.diskIO().execute { localDataSource.setRecorded(recordingEntity) }
     }
 
     companion object {
@@ -111,10 +116,16 @@ class RecordingRepository private constructor(
         fun getInstance(
             remoteDataSource: RemoteDataSource,
             path: String,
-            localDataSource: LocalDataSource
+            localDataSource: LocalDataSource,
+            appExecutors: AppExecutors
         ): RecordingRepository =
             instance ?: synchronized(this) {
-                instance ?: RecordingRepository(remoteDataSource, path, localDataSource).apply {
+                instance ?: RecordingRepository(
+                    remoteDataSource,
+                    path,
+                    localDataSource,
+                    appExecutors
+                ).apply {
                     instance = this
                 }
             }
