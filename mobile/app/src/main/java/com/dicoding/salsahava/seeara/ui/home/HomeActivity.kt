@@ -3,7 +3,6 @@ package com.dicoding.salsahava.seeara.ui.home
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.salsahava.seeara.databinding.ActivityMainBinding
-import com.dicoding.salsahava.seeara.ui.adapter.SectionsPagerAdapter
 
 class HomeActivity : AppCompatActivity() {
 

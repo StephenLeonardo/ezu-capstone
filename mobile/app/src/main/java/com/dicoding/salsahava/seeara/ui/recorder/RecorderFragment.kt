@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.salsahava.seeara.databinding.FragmentRecorderBinding
-import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
+import com.dicoding.salsahava.seeara.ui.history.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
 import com.dicoding.salsahava.seeara.vo.Status
 
@@ -41,7 +41,7 @@ class RecorderFragment : Fragment() {
 
             binding?.fabStart?.isEnabled = true
 
-            adapter = HistoryAdapter(requireActivity())
+            adapter = HistoryAdapter()
 
             binding?.fabStart?.setOnClickListener {
                 val permissions = arrayOf(
@@ -76,6 +76,7 @@ class RecorderFragment : Fragment() {
 
     private fun stopRecording() {
         binding?.cvTranslation?.tvTranslation?.visibility = View.INVISIBLE
+        showLoading(true)
         viewModel?.stopRecording()
         viewModel?.getDownloadUrl()?.observe(viewLifecycleOwner, { downloadUrl ->
             viewModel?.getRecording(requireContext(), downloadUrl.toString())
@@ -90,7 +91,7 @@ class RecorderFragment : Fragment() {
                                 recording.data?.let { adapter.addItem(it) }
                                 binding?.cvTranslation?.tvTranslation?.visibility = View.VISIBLE
                                 binding?.cvTranslation?.tvTranslation?.text =
-                                    recording.data?.translation
+                                    adapter.listRecording.last().translation
                             }
 
                             Status.ERROR -> {

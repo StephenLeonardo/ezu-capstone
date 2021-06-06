@@ -1,6 +1,5 @@
-package com.dicoding.salsahava.seeara.ui.adapter
+package com.dicoding.salsahava.seeara.ui.history
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,12 @@ import com.dicoding.salsahava.seeara.R
 import com.dicoding.salsahava.seeara.data.source.local.entity.RecordingEntity
 import com.dicoding.salsahava.seeara.databinding.ItemListHistoryBinding
 
-class HistoryAdapter(activity: Activity) :
+class HistoryAdapter :
     RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     var listRecording = ArrayList<RecordingEntity>()
 
     fun setRecorded(recording: List<RecordingEntity>) {
-        if (recording == null) return
         this.listRecording.clear()
         this.listRecording.addAll(recording)
         this.notifyDataSetChanged()

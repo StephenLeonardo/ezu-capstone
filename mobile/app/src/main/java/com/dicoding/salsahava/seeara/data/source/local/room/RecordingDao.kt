@@ -17,7 +17,7 @@ interface RecordingDao {
     @Delete
     fun deleteRecord(record: RecordingEntity)
 
-    @Query("SELECT * FROM recordEntities ORDER BY id ASC")
+    @Query("SELECT * FROM recordEntities ORDER BY date DESC")
     fun getAllRecord(): LiveData<List<RecordingEntity>>
 
     @Query("SELECT * FROM recordEntities WHERE id = :id")
