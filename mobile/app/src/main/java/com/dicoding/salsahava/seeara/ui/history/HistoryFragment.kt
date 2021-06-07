@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.salsahava.seeara.databinding.HistoryFragmentBinding
-import com.dicoding.salsahava.seeara.ui.adapter.HistoryAdapter
 import com.dicoding.salsahava.seeara.viewmodel.ViewModelFactory
 
 class HistoryFragment : Fragment() {
@@ -34,7 +33,7 @@ class HistoryFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(context as Context)
             viewModel = ViewModelProvider(this, factory)[HistoryViewModel::class.java]
 
-            val adapter = HistoryAdapter(requireActivity())
+            val adapter = HistoryAdapter()
             binding?.progressBar?.visibility = View.VISIBLE
             viewModel?.getAllRecord()?.observe(viewLifecycleOwner, { recorded ->
                 binding?.progressBar?.visibility = View.GONE

@@ -1,4 +1,4 @@
-package com.dicoding.salsahava.seeara.ui.adapter
+package com.dicoding.salsahava.seeara.ui.home
 
 import android.content.Context
 import androidx.annotation.StringRes

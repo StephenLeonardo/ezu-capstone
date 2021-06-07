@@ -3,6 +3,7 @@ package com.dicoding.salsahava.seeara.data
 import android.content.Context
 import android.media.MediaRecorder
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.salsahava.seeara.data.source.local.LocalDataSource
@@ -80,17 +81,21 @@ class RecordingRepository private constructor(
     ): LiveData<Resource<RecordingEntity>> {
 
         return object : NetworkBoundResource<RecordingEntity, RecordingResponse>(appExecutors) {
-            override fun loadFromDB(): LiveData<RecordingEntity> = localDataSource.getRecordById(0)
+            val id = Random.nextInt()
+
+            override fun loadFromDB(): LiveData<RecordingEntity> {
+                return localDataSource.getRecordById(id)
+            }
 
             override fun shouldFetch(data: RecordingEntity?): Boolean =
-                true
+                data == null
 
             override fun createCall(): LiveData<ApiResponse<RecordingResponse>> =
                 remoteDataSource.getRecording(context, downloadUrl)
 
             override fun saveCallResult(data: RecordingResponse) {
                 val recording = RecordingEntity(
-                    Random.nextInt(0, 100),
+                    id,
                     data.fileName,
                     data.fileUrl,
                     data.translation,
