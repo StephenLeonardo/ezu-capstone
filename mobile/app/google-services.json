@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "127268830182",
+    "project_id": "tonal-transit-312612",
+    "storage_bucket": "tonal-transit-312612.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127268830182:android:7caaf9f2e42612ddd4b427",
+        "android_client_info": {
+          "package_name": "com.dicoding.salsahava.seeara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127268830182-9odpdp129agi9n4a5iqsrnaj6628k7hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYZ62GK1r01OttJqRgLTc9AACQmK0gVZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127268830182-9odpdp129agi9n4a5iqsrnaj6628k7hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

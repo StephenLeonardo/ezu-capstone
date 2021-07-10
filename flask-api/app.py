@@ -130,8 +130,8 @@ def predict():
         filename = request.form.get('filename', None)
         file_url =  request.form.get('file_url', None)
 
-        print(filename)
-        print(file_url)
+        # print(filename)
+        # print(file_url)
 
         # print('woohoo')
         # Url untuk cloud storage
